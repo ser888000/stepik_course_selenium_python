@@ -4,10 +4,24 @@ import time
 
 
 
-link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+#link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1"
 
 
-def test_add_to_cart_from_product_page_with_promo(browser):
+@pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer3",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
+                                  pytest.param(
+                                    "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", 
+                                    marks=pytest.mark.xfail),
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
+                                  "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
+
+def test_add_to_cart_from_product_page_with_promo(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.press_button_add_to_basket_with_promo()
@@ -15,11 +29,5 @@ def test_add_to_cart_from_product_page_with_promo(browser):
     page.should_be_message_about_adding()
     page.should_be_message_basket_total()
 
-#    time.sleep(0)
-    
-#def test_guest_can_go_to_login_page(browser):
-#    page = MainPage(browser, link)   # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес 
-#    page.open()                      # открываем страницу
-#    page.go_to_login_page()          # выполняем метод страницы — переходим на страницу логина
-#    login_page = LoginPage(browser, browser.current_url)
-#    login_page.should_be_login_page()
+#    time.sleep(20)
+
