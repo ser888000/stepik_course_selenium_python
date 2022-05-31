@@ -11,7 +11,7 @@ class BasePage:
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
-#        self.browser.implicitly_wait(timeout)
+        self.browser.implicitly_wait(timeout)
 
     def open(self):
         # окрыть браузер
@@ -49,22 +49,26 @@ class BasePage:
         return text in self.browser.current_url
 
     def go_to_login_page(self):
+        # Переход на страницу авторизации
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click() 
 
     def should_be_login_link(self):
+        # прверка наличия ссылки на авторизацию
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
 
     def go_to_basket_page(self):
+        # переход в корзину
         basket_link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
         basket_link.click() 
 
     def should_be_authorized_user(self):
+        # проверка, что пользователь авторизован
         assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
                                                                     " probably unauthorised user"        
 
     def solve_quiz_and_get_code(self): 
-        # метод в тесте, для получения проверочного кода
+        # метод, для получения проверочного кода
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
