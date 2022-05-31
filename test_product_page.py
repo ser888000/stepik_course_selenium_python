@@ -31,7 +31,7 @@ class TestUserAddToBasketFromProductPage():
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
         # Функция запускается перед выполнением каждого теста в классе, и если надо, то после (здесь не реализовано)
-        link = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
+        link = "http://selenium1py.pythonanywhere.com/accounts/login/"
         page = LoginPage(browser, link)
         page.open() # in BasePage
         page.register_new_user(str(time.time()) + "@fakemail.org", 'asdfKH76.') # in LoginPage
